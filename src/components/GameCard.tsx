@@ -1,22 +1,27 @@
-import type { Game } from '@/hooks/useGames'
-import { Card, CardBody, Heading, Image } from '@chakra-ui/react'
-import PlatformIconList from './PlatformIconList'
+import type { Game } from "@/hooks/useGames";
+import { Card, CardBody, Heading, HStack, Image, space } from "@chakra-ui/react";
+import PlatformIconList from "./PlatformIconList";
+import CriticScore from "./CriticScore";
 
 interface Props {
-    game : Game
+  game: Game;
 }
 
-
-const GameCard = ({game} : Props) => {
+const GameCard = ({ game }: Props) => {
   return (
-    <Card borderRadius={10} overflow='hidden'>
-        <Image src={game.background_image}></Image>
-        <CardBody>
-            <Heading>{game.name}</Heading>
-            <PlatformIconList platforms={game.parent_platforms.map(({platform}) => platform)}></PlatformIconList>
-        </CardBody>
+    <Card borderRadius={10} overflow="hidden">
+      <Image src={game.background_image}></Image>
+      <CardBody>
+        <Heading>{game.name}</Heading>
+        <HStack justifyContent='space-between'>
+          <PlatformIconList
+            platforms={game.parent_platforms.map(({ platform }) => platform)}
+          ></PlatformIconList>
+          <CriticScore criticScore={game.metacritic}/>
+        </HStack>
+      </CardBody>
     </Card>
-  )
-}
+  );
+};
 
-export default GameCard
+export default GameCard;
