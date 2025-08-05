@@ -24,6 +24,7 @@ interface FetchGamesResponse {
 const useGames = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const useGames = () => {
     const signal = controller.signal;
 
     const fetchGames = async () => {
+      setLoading(true);
       try {
         const response = await apiClient.get<FetchGamesResponse>('/games', { signal });
         setGames(response.data.results);
@@ -43,7 +45,9 @@ const useGames = () => {
         } else {
           setError('An error occurred while fetching games');
         }
+        setLoading(false);
       }
+      setLoading(false);
     };
 
     fetchGames();
@@ -53,7 +57,7 @@ const useGames = () => {
     };
   }, []);
 
-  return { games, error };
+  return { games, error, isLoading };
 }
 
 export default useGames;
