@@ -1,19 +1,17 @@
 
-import './App.css'
 import { Grid, GridItem, HStack, Show } from '@chakra-ui/react'
-import NavBar from './components/NavBar'
-import GameGrid from './components/GameGrid'
-import GenreList from './components/GenreList'
 import { useState } from 'react'
-import type { Genre } from './hooks/useGenres'
-import PlatformSelector from './components/PlatformSelector'
-import type { Platform } from './hooks/usePlatforms'
-import SortSelector from './components/SortSelector'
+import './App.css'
+import GameGrid from './components/GameGrid'
 import GameHeading from './components/GameHeading'
+import GenreList from './components/GenreList'
+import NavBar from './components/NavBar'
+import PlatformSelector from './components/PlatformSelector'
+import SortSelector from './components/SortSelector'
 
 export interface GameQuery {
-  genre : Genre | null,
-  platform : Platform | null,
+  genreId? : number,
+  platformId? : number,
   sortOption: string,
   searchText: string
 }
@@ -31,13 +29,13 @@ function App() {
       </GridItem>
       <Show above='lg'>
         <GridItem area='aside' paddingX={5}>
-          <GenreList selectedGenre={gameQuery.genre} onSelectGenre={(genre) => setGameQuery({...gameQuery, genre})}/>
+          <GenreList selectedGenreId={gameQuery.genreId} onSelectGenre={(genre) => setGameQuery({...gameQuery,  genreId: genre.id})}/>
         </GridItem>
       </Show>
       <GridItem padding={"10px"} area='main'>
         <GameHeading gameQuery={gameQuery}/>
         <HStack marginY={5}>
-          <PlatformSelector selectedPlatform={gameQuery.platform} onSelectPlatform={(platform) => setGameQuery({...gameQuery, platform})}/>
+          <PlatformSelector selectedPlatformId={gameQuery.platformId} onSelectPlatform={(platform) => setGameQuery({...gameQuery, platformId: platform.id})}/>
           <SortSelector selectedSortOption={gameQuery.sortOption} onSelectSortOption={(sortOption) => setGameQuery({...gameQuery, sortOption})}/>
         </HStack>
         <GameGrid gameQuery={gameQuery}/>
